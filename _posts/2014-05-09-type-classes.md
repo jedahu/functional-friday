@@ -3,8 +3,6 @@ title: Type classes
 layout: post
 ---
 
-# Type classes
-
 Welcome to the inaugural *Functional Friday* post. I intend to explore, as
 far as is possible in C#, what functional programming brings to the table:
 types, laws, and equational reasoning. Example code is in the C# project at
