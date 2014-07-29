@@ -1,5 +1,6 @@
 ---
 title: Type classes
+layout: post
 ---
 
 # Type classes

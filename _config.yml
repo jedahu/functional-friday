@@ -1,9 +1,11 @@
 name: "Functional Friday"
-markdown: kramdown
 highlighter: pygments
 exclude: [README.md, LICENSE, Makefile]
 baseurl: /functional-friday
 permalink: :year-:month-:day-:title
+
+markdown: kramdown
+markdown_ext: md
 
 # Information for the Atom feed
 gereksiz:
