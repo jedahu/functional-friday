@@ -3,7 +3,7 @@ markdown: kramdown
 highlighter: pygments
 exclude: [README.md, LICENSE, Makefile]
 baseurl: /functional-friday
-permalink: pretty
+permalink: :year-:month-:day-:title
 
 # Information for the Atom feed
 gereksiz:
