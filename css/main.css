@@ -147,6 +147,10 @@ article ul, article ol {
    margin-bottom: 0.7em;
 }
 
+article dl dd {
+   margin-left: 1.35em;
+}
+
 /* Rounded corners, aligned, etc. */
 article img {
    border-radius: 4px;
