@@ -1,7 +1,6 @@
 name: "Functional Friday"
 markdown: redcarpet
 highlighter: pygments
-permalink: :title
 exclude: [README.md, LICENSE, Makefile]
 baseurl: /functional-friday
 
