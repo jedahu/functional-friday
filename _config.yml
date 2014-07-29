@@ -1,5 +1,5 @@
 name: "Functional Friday"
-markdown: redcarpet
+markdown: kramdown
 highlighter: pygments
 exclude: [README.md, LICENSE, Makefile]
 baseurl: /functional-friday
