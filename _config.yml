@@ -3,8 +3,12 @@ markdown: kramdown
 highlighter: pygments
 exclude: [README.md, LICENSE, Makefile]
 baseurl: /functional-friday
+permalink: pretty
 
 # Information for the Atom feed
 gereksiz:
    author: "Jeremy Hughes"
    email: "jedahu@gmail.com"
+
+kramdown:
+    use_coderay: true
