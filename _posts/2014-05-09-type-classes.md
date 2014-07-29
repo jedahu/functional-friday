@@ -118,10 +118,10 @@ public sealed class EntityWrapper
         ....;
     }
 }
-~~~
 
 IEnumerable<Entity> entities = ...;
 var allAreEqual = AllEqual(entities.Select(e => new EntityWrapper(e)));
+~~~
 
 But wrapping and unwrapping object is not space or time efficient. There
 ought to be a better way to constraint type variables, one that does not
