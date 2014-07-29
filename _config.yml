@@ -1,10 +1,11 @@
-name: "Gereksiz"
+name: "Functional Friday"
 markdown: redcarpet
 highlighter: pygments
 permalink: :title
 exclude: [README.md, LICENSE, Makefile]
+baseurl: /functional-friday
 
 # Information for the Atom feed
 gereksiz:
-   author: "John Doe"
-   email: "john.doe@mail.sexy"
+   author: "Jeremy Hughes"
+   email: "jedahu@gmail.com"
