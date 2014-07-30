@@ -24,7 +24,7 @@ the type of `T`. Here are a few of the possible implementations of
 
 [pp]: http://en.wikipedia.org/wiki/Parametric_polymorphism
 
-~~~cs
+~~~~~~~~~~~~~~~~~~~~csharp
 IEnumerable<T> One<T>(T x)
 {
     yield return t;
@@ -40,7 +40,7 @@ IEnumerable<T> Infinite(T x)
 {
     while (true) { yield return x; }
 }
-~~~
+~~~~~~~~~~~~~~~~~~~~
 
 Take `One` for example: `One(3)` and `One("a")` operate exactly the same. If
 `Mystery` were not parametrically polymorphic the same guarantees would not
@@ -49,7 +49,7 @@ Mystery2(int x)` are much greater than `Mystery` because `Mystery2` can
 instantiate a new `int` and call any of the methods on `x`. Here are a
 couple of possible `Mystery2` implementations.
 
-~~~cs
+~~~~~~~~~~~~~~~~~~~~csharp
 IEnumerable<int> Multiply(int x)
 {
     yield return x * 5;
@@ -62,7 +62,7 @@ IEnumerable<int> OfLength(int x)
         yield return i;
     }
 }
-~~~
+~~~~~~~~~~~~~~~~~~~~
 
 [Parametricity][] is the name for this restrictive yet helpful property of
 parametrically polymorphic functions.
@@ -82,14 +82,14 @@ type of `Mystery3` constrains its implementation such that it cannot touch
 objects of type `T` *except* through the methods of `IEquatable<T>`. A
 possible implementation follows.
 
-~~~cs
+~~~~~~~~~~~~~~~~~~~~csharp
 bool AllEqual<T>(IEnumerable<T> xs) where T : IEquatable<T>
 {
     return xs.Any()
         ? xs.All(x => x.Equals(xs.First()))
         : true;
 }
-~~~
+~~~~~~~~~~~~~~~~~~~~
 
 The downside to this method of constraining type variables is that it
 requires ahead-of-time implementation of an interface. For example, objects
@@ -97,7 +97,7 @@ of a type `Entity` which does not implement `IEquatable` and is defined in a
 non-modifiable library cannot be used with `AllEqual` unless they are
 wrapped in a conforming class.
 
-~~~cs
+~~~~~~~~~~~~~~~~~~~~csharp
 public sealed class EntityWrapper
     : IEquatable<EntityWrapper>
 {
@@ -121,7 +121,7 @@ public sealed class EntityWrapper
 
 IEnumerable<Entity> entities = ...;
 var allAreEqual = AllEqual(entities.Select(e => new EntityWrapper(e)));
-~~~
+~~~~~~~~~~~~~~~~~~~~
 
 But wrapping and unwrapping object is not space or time efficient. There
 ought to be a better way to constraint type variables, one that does not
@@ -184,16 +184,16 @@ cannot be opened for modification.
 
 **Solution**: A JsonShow type class.
 
-~~~cs
+~~~~~~~~~~~~~~~~~~~~csharp
 public interface IJsonShow<in T>
 {
     string ShowJson(T x);
 }
-~~~
+~~~~~~~~~~~~~~~~~~~~
 
 With implementations for some primitives.
 
-~~~cs
+~~~~~~~~~~~~~~~~~~~~csharp
 public sealed class JsonShowInt
     : IJsonShow<int>
 {
@@ -218,11 +218,11 @@ public sealed class JsonShowString
 
     public static JsonShowString Instance = new JsonShowString();
 }
-~~~
+~~~~~~~~~~~~~~~~~~~~
 
 And a complex type.
 
-~~~cs
+~~~~~~~~~~~~~~~~~~~~csharp
 public sealed class JsonShowEnumerable<T, TJsonShow>
     : IJsonShow<IEnumerable<T>>
     where TJsonShow : IJsonShow<T>, new()
@@ -237,11 +237,11 @@ public sealed class JsonShowEnumerable<T, TJsonShow>
             "]");
     }
 }
-~~~
+~~~~~~~~~~~~~~~~~~~~
 
 An example of call-site use.
 
-~~~cs
+~~~~~~~~~~~~~~~~~~~~csharp
 public void PrintDelimitedJson<T, TJsonShow>(
     T obj,
     TJsonShow show)
@@ -259,12 +259,12 @@ PrintDelimitedJson(
     new[] {1,2,3,4},
     new JsonShowEnumerable<int, JsonShowString>());
     // => <[1,2,3,4]>
-~~~
+~~~~~~~~~~~~~~~~~~~~
 
 An alternative call-site formulation where the type class instance is
 created rather than passed in. Note the `new()` constraint on `TJsonShow`.
 
-~~~cs
+~~~~~~~~~~~~~~~~~~~~csharp
 public void PrintDelimitedJson2<T, TJsonShow>(T obj)
     where TJsonShow : IJsonShow<T>, new()
 {
@@ -281,15 +281,15 @@ PrintDelimitedJson2<
     JsonShowEnumerable<int, JsonShowInt>>(
         new[] {1,2,3,4});
     // => <[1,2,3,4]>
-~~~
+~~~~~~~~~~~~~~~~~~~~
 
 It is enforced at compile time that types without an `IJsonShow` type class
 instance cannot be shown.
 
-~~~cs
+~~~~~~~~~~~~~~~~~~~~csharp
 PrintDelimitedJson2<StringBuilder, ???>(new StringBuilder());
 // No IJsonShow<StringBuilder> instance type to put in place of ???.
-~~~
+~~~~~~~~~~~~~~~~~~~~
 
 
 ## Example 2: improving on the .NET System library
@@ -297,18 +297,18 @@ PrintDelimitedJson2<StringBuilder, ???>(new StringBuilder());
 Here is the equality type class declaration in C#. It might look familiar;
 it is the `System.Collections.Generic.IEqualityComparer`.
 
-~~~cs
+~~~~~~~~~~~~~~~~~~~~csharp
 public interface IEqualityComparer<in T>
 {
     bool Equals(T x1, T x2);
     int GetHashCode(T x);
 }
-~~~
+~~~~~~~~~~~~~~~~~~~~
 
 Here’s how `IEqualityComparer` is currently used in
 `System.Collections.Generic.Dictionary`.
 
-~~~cs
+~~~~~~~~~~~~~~~~~~~~csharp
 public class Dictionary<TKey, TValue>
 {
     public Dictionary();
@@ -321,12 +321,12 @@ public class Dictionary<TKey, TValue>
         IDictionary<TKey, TValue> dictionary,
         IEqualityComparer<TKey> comparer);
 }
-~~~
+~~~~~~~~~~~~~~~~~~~~
 
 There is a problem with this usage as demonstrated by the functions,
 `ReadFileBytes` and `ResponseContentLength`.
 
-~~~cs
+~~~~~~~~~~~~~~~~~~~~csharp
 // assuming a case sensitive file system
 public void WriteToFile(
     string fname,
@@ -354,7 +354,7 @@ public int? ResponseContentLength(IDictionary<string, string> headers)
     }
     return new int?();
 }
-~~~
+~~~~~~~~~~~~~~~~~~~~
 
 Because it is intended to work with a case sensitive file system,
 `ReadFileBytes` requires that the passed-in dictionary make case sensitive
@@ -365,7 +365,7 @@ case insensitive.
 However, nothing prevents the following bad code from compiling and
 operating incorrectly.
 
-~~~cs
+~~~~~~~~~~~~~~~~~~~~csharp
 var files = new Dictionary<string, FileStream>(
     "CaMel.txt",
     StringComparer.InvariantCultureIgnoreCase)
@@ -386,13 +386,13 @@ var headers = new Dictionary<string, string>(
     };
 var length = ResponseContentLength(headers);
 // OOPS! Got a length of int?() instead of int?(256).
-~~~
+~~~~~~~~~~~~~~~~~~~~
 
 This hole in type safety is easily fixed if the type of the equality comparer
 is added to the dictionary’s type signature. Here is a `Dict` type that
 wraps `Dictionary` to achieve this.
 
-~~~cs
+~~~~~~~~~~~~~~~~~~~~csharp
 public interface IDict<TKey, TValue, TEq>
     : IDictionary<TKey, TValue>
     where TEq : IEqualityComparer<TKey>, new()
@@ -413,12 +413,12 @@ public sealed class Dict<TKey, TValue, TEq>
     public Dict(IDictionary<TKey, TValue> dictionary, TEq comparer)
         : base(dictionary, comparer) { }
 }
-~~~
+~~~~~~~~~~~~~~~~~~~~
 
 To make our example safe the two string comparers need to be reimplemented
 as rule abiding type class instances.
 
-~~~cs
+~~~~~~~~~~~~~~~~~~~~csharp
 public sealed class StringEq
     : IEqualityComparer<string>
 {
@@ -452,13 +452,13 @@ public sealed class IgnoreCaseEq
 
     public static IgnoreCaseEq Instance = new IgnoreCaseEq();
 }
-~~~
+~~~~~~~~~~~~~~~~~~~~
 
 Now the example functions can be rewritten safely. Code that calls these
 safe functions with dictionaries of the wrong equality comparer will fail to
 compile.
 
-~~~cs
+~~~~~~~~~~~~~~~~~~~~csharp
 // assuming a case sensitive file system
 public void WriteToFile(
     string fname,
@@ -487,14 +487,14 @@ public int? ResponseContentLength(
     }
     return new int?();
 }
-~~~
+~~~~~~~~~~~~~~~~~~~~
 
 
 ## Example 1 in Haskell
 
 For comparison, here is the JsonShow example in Haskell.
 
-~~~hs
+~~~~~~~~~~~~~~~~~~~~haskell
 class JsonShow a where
     showJson :: a -> String
 
@@ -518,7 +518,7 @@ main = do
     printDelimitedJson 1
     printDelimitedJson "abc"
     printDelimitedJson [1, 2, 3, 4]
-~~~
+~~~~~~~~~~~~~~~~~~~~
 
 Note that the type-class instances are anonymous and are passed implicitly
 to `printDelimitedJson`. This is possible because Haskell allows only one
@@ -527,7 +527,7 @@ type-class instance per type. Alternate instances require the use of a
 zero runtime overhead. To demonstrate, here are the two string equality type
 class instances from example 2 (sans hash code method).
 
-~~~hs
+~~~~~~~~~~~~~~~~~~~~haskell
 class Eq a where
     (==) :: a -> a -> Bool
 
@@ -539,7 +539,7 @@ newtype IgnoreCase = IgnoreCase String
 instance Eq IgnoreCase where
     (IgnoreCase s1) == (IgnoreCase s2) =
         stringEqual (downCase s1) (downCase s2)
-~~~
+~~~~~~~~~~~~~~~~~~~~
 
 `String` and `IgnoreCase` are identical at runtime, but are treated as
 different types by the compiler, and therefore can have an Eq instance each.

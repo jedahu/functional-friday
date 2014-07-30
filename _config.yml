@@ -1,5 +1,4 @@
 name: "Functional Friday"
-highlighter: pygments
 exclude: [README.md, LICENSE, Makefile]
 baseurl: /functional-friday
 permalink: :year-:month-:day-:title

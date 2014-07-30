@@ -1,0 +1,57 @@
+body {
+  font-size: 14px;
+  line-height: 20px;
+  max-width: 760px;
+  margin: 0 auto;
+}
+h1 {
+  font-size: 79px;
+  line-height: 80px;
+  margin-top: 40px;
+  margin-bottom: 20px;
+}
+h2, article h1 {
+  font-size: 44px;
+  line-height: 60px;
+  margin-top: 40px;
+  margin-bottom: 20px;
+}
+h3, article h2, .title {
+  font-size: 25px;
+  line-height: 40px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+h4, article h3 {
+  font-size: 14px;
+  line-height: 20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+p, ul, ol, pre, table, blockquote {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding-left: 0;
+  list-style-position: outside;
+}
+
+/* Sanitation */
+hr {
+  border: 1px solid;
+  margin: -1px 0;
+}
+ul ul, ol ol, ul ol, ol ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+b, strong, em, small, code {
+  line-height: 1;
+}
+sup, sub {
+  vertical-align: baseline;
+  position: relative;
+  top: -0.4em;
+}
+sub {
+  top: 0.4em;
+}

@@ -1,190 +1,5 @@
-
-/* Standard Text */
-.content, input, button, textarea {
-    font: normal 12px/20px arial,sans-serif;
-    color: #555;
-}
-
-
-/* Block Baselines */
-h1, h2, h3, h4, h5, h6,
-p, ul, ol, pre, blockquote,
-textarea, button {
-    margin-bottom: 20px;
-}
-img { display: block; }
-
-
-
-/* Headers */
-h1,h2,h3,h4,h5,h6 {
-    text-rendering: optimizeLegibility; /* optional - helps kerning in some browsers */
-    font-family: georgia,serif;
-    font-weight: normal;
-    color: #39619e;
-}
-h1, h1 a {
-    font-size: 30px;
-    line-height: 40px;
-}
-h2 {
-    font-size: 24px;
-    line-height: 20px;
-}
-h3 {
-    font-size: 20px;
-    margin-bottom: 20px;
-}
-h4 { 
-    font-size: 16px;
-    font-weight: bold;
-}
-h5 {
-    font-size: 14px;
-    font-weight: bold;
-    margin-bottom: 0;
-}
-h6 {
-    font-size: 12px;
-    font-weight: bold;
-    margin-bottom: 0;
-}
-
-
-
-/* Paragraph Elements */
-a:link {
-    color: #375493;
-    /* text-decoration: underline; */
-}
-a:active {
-    background: #ccd5e2;
-    text-decoration: underline;
-}
-a:hover {
-    background: #ccd5e2;
-    text-decoration: none;
-}
-a:visited {
-    color: black;
-    /* text-decoration: underline; */
-}
-sup, sub {
-    font-size: 80%;
-    line-height: 0;
-}
-sup {
-    vertical-align: super;
-}
-sub {
-    vertical-align: sub;
-}
-code {
-    font-family: Consolas, "Courier New", Courier, mono;
-}
-
-
-
-/* Block Elements */
-ul , ol{
-    margin-left: 0;
-    padding-left: 1.3em;
-}
-blockquote {
-    display: block;
-    background: #eee;
-    background: rgba(0,0,0,.05);
-    border-left: 4px solid;
-    border-left-color: #ccc;
-    border-left-color:  rgba(0,0,0,.1);
-    padding: 10px;
-    font-style: italic;
-}
-    blockquote p:last-child {
-        margin-bottom: 0;
-    }
-pre {
-    font-family: Consolas, "Courier New", Courier, mono;
-    background: black;
-    background: rgba(0,0,0,.8);
-    color: #eee;
-    padding: 10px 20px;
-}
-
-
-
-/* Forms */
-form { 
-}
-    form p {
-        margin: 0;
-    }
-label {
-    display: block;
-    margin-bottom: 0;
-}
-input, textarea, select {
-    display: block;
-    margin: 4px 0 24px 0;
-}
-input[type=text], input[type=email], input[type=url], textarea {
-    width: 400px;
-    border: 1px solid;
-    border-color: #ccc;
-    border-color: rgba(0,0,0,.1);
-    height: 30px;
-    background: #fff;
-    background: rgba(255,255,255,.8);
-    font-size: 16px;
-    line-height: 30px;
-    padding: 0;
-    border-radius: 3px;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
-}
-textarea {
-    height: 150px; 
-    width: 450px;
-    font-size: 14px;
-    line-height: 16px;
-}
-
-label.error {
-    width: 400px;
-    text-align: right;
-    color: #aa0000;
-}
-label.error:before {
-    content: "▲ ";
-}
-input.error, textarea.error {
-    border-color: #aa0000;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 body {
    background-color: #ecf0f1;
-   font: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-   font-size: small;
    -webkit-font-smoothing: antialiased;
    text-align: center;
 }
@@ -218,7 +33,6 @@ body {
 }
 
 main {
-   font-size: 115%;
    text-align: left;
    margin: 2em auto 0.5em;
    max-width: 42em;
@@ -231,11 +45,6 @@ header a {
    text-decoration: none;
 }
 
-/* the website's name on the header */
-.title {
-   display: inline-block;
-   line-height: 0.5em;
-}
 
 .title a {
    color: #e74c3c;
@@ -245,17 +54,13 @@ header a {
    color: #000;
 }
 
-.title {
-   margin-top: .4em;
-}
-
 .meta {
    color: #aaa;
 }
 
 code,
 pre {
-   font-family: Menlo, Monaco, "Courier New", monospace;
+   font-family: Inconsolata, Menlo, Monaco, "Courier New", monospace;
 }
 code {
 
@@ -288,13 +93,13 @@ pre code {
 
 
 article {
-   overflow: auto;
+   overflow: show;
    word-wrap: break-word;
 }
 
 
 article dl dd {
-   margin-left: 1.35em;
+   margin-left: 34px;
 }
 
 
@@ -316,4 +121,11 @@ footer #date {
 /* Remove the huge gap at the first paragraph */
 #home p.intro {
    margin-top: 0px;
+}
+
+article header h1 {
+    background-color: #444466;
+    color: #fffeef;
+    margin-left: -1000%;
+    padding-left: 1000%;
 }
